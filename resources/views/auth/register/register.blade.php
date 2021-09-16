@@ -15,6 +15,7 @@
         <div class="col-md-8">
             <div class="card">
                 <h1 class="card-header">会員情報登録フォーム</h1>
+                
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('user.register_post') }}">
@@ -46,15 +47,29 @@
                         </div>
 
                         <p>性別<br>
+                        @if(old('gender_id')==1)
+                        <input type="radio" name="gender_id" value=1 checked> 男性
+                        <input type="radio" name="gender_id" value=2> 女性
+                        @elseif(old('gender_id')==2)
+                        <input type="radio" name="gender_id" value=1> 男性
+                        <input type="radio" name="gender_id" value=2 checked> 女性
+                        @else
                         <input type="radio" name="gender_id" value=1> 男性
                         <input type="radio" name="gender_id" value=2> 女性
+                        @endif
                         </p>
 
 
                         <div class="form-group">
                           <label for="exampleFormControlSelect1">都道府県</label>
                             <select class="form-control" id="exampleFormControlSelect1" name="prefecture">
+                                
+                                
+                                @if(old('prefecture')==!null)
+                                <option value="{{old('prefecture')}}" selected>{{$prefectures->find(old('prefecture'))->name}}</option>
+                                @else
                                 <option value="" selected>選択してください</option>
+                                @endif
                              @foreach($prefectures as $prefecture)
                             <option value="{{ $prefecture -> id }}">{{ $prefecture -> name }}</option>
                              @endforeach
