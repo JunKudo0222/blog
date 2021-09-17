@@ -11,6 +11,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\Hankaku;
+use App\Rules\Gender;
+use App\Rules\PrefectureRule;
 
 
 class RegisterController extends Controller
@@ -59,15 +62,17 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        
         return Validator::make($data, [
-            'name_sei' => ['required', 'string', 'max:255'],
-            'name_mei' => ['required', 'string', 'max:255'],
-            'gender_id' => ['required'],
-            'prefecture' => ['required' ],
-            'address' => ['max:100' ],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            
+            'name_sei' => ['required', 'string', 'max:20'],
+            'name_mei' => ['required', 'string', 'max:20'],
+            'gender_id' => ['required',new Gender],
+            'prefecture' => ['required','between:1,47','integer' ],
+            'address' => ['nullable','string','max:100' ],
+            'password' => ['required','string', 'min:8','max:20',new Hankaku, 'confirmed'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'email' => 'required|string|email|max:255|unique:users,email,NULL,id,deleted_at,NULL',
+            'email' => 'required|string|email|max:200|unique:users,email,NULL,id,deleted_at,NULL',
         ]);
         return view('posts.confirm');
     }

@@ -7,6 +7,7 @@
         float:left;
         width:1000px;
     }
+    
 </style>
 
 @section('content')
@@ -15,6 +16,15 @@
         <div class="col-md-8">
             <div class="card">
                 <h1 class="card-header">会員情報登録フォーム</h1>
+                @if ($errors->any())
+                <div class="alert alert-success">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                 
 
                 <div class="card-body">
@@ -46,7 +56,9 @@
                             </div>
                         </div>
 
-                        <p>性別<br>
+                        
+                        <div class="is-invalid gender">
+                            性別　:
                         @if(old('gender_id')==1)
                         <input type="radio" name="gender_id" value=1 checked> 男性
                         <input type="radio" name="gender_id" value=2> 女性
@@ -54,26 +66,43 @@
                         <input type="radio" name="gender_id" value=1> 男性
                         <input type="radio" name="gender_id" value=2 checked> 女性
                         @else
-                        <input type="radio" name="gender_id" value=1> 男性
-                        <input type="radio" name="gender_id" value=2> 女性
+                        <input type="radio" name="gender_id" value=1 class="@error('gender_id') is-invalid @enderror"> 男性
+                        <input type="radio" name="gender_id" value=2 class="@error('gender_id') is-invalid @enderror"> 女性
+                        
                         @endif
-                        </p>
+                        @error('gender_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                        </div>
+
+                    </p>
 
 
                         <div class="form-group">
                           <label for="exampleFormControlSelect1">都道府県</label>
-                            <select class="form-control" id="exampleFormControlSelect1" name="prefecture">
+                          <div class="is-invalid">
+                            <select class="form-control" id="exampleFormControlSelect1" name="prefecture" class="is-invalid">
                                 
                                 
-                                @if(old('prefecture')==!null)
+                                @if(old('prefecture->name')==!null)
                                 <option value="{{old('prefecture')}}" selected>{{$prefectures->find(old('prefecture'))->name}}</option>
                                 @else
                                 <option value="" selected>選択してください</option>
                                 @endif
                              @foreach($prefectures as $prefecture)
-                            <option value="{{ $prefecture -> id }}">{{ $prefecture -> name }}</option>
-                             @endforeach
+                            <option value="{{ $prefecture -> id }}" class="@error('prefecture') is-invalid @enderror">{{ $prefecture -> name }}</option>
+                            @endforeach
+                            
+                            
                             </select>
+                            @error('prefecture')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                          </div>
                         </div>
 
 
@@ -92,7 +121,7 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('それ以降の住所') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}" required autocomplete="address">
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}"  autocomplete="address">
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -104,12 +133,37 @@
                         </div>
 
 
+                        
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('パスワード') }}</label>
+                            
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="new-password">
+                                
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('パスワード確認') }}</label>
+                            
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="{{ old('password') }}" required autocomplete="new-password">
+                                
+                            </div>
+                        </div>
 
+                        
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('メールアドレス') }}</label>
+    
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+    
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -117,29 +171,7 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="{{ old('password') }}" required autocomplete="new-password">
-                            </div>
-                        </div>
-
+                        
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
