@@ -20,10 +20,10 @@ class AdminController extends Controller
 		if($user_id == "hogehoge" && $password == "fugafuga"){
 			$request->session()->put("admin_auth", true);
             
-			return redirect('php/admin.php');
+			return redirect()->route('admin.top');
 		}
 		//ログイン失敗
-		return redirect('admin.admin_login')->withErrors([
+		return redirect()->route('admin.login')->withErrors([
 			"login" => "ユーザーIDまたはパスワードが違います"
 		]);
 		

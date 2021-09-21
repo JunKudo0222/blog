@@ -98,7 +98,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => ':attribute は半角英数字で入力して下さい',
-    'required' => 'The :attribute field is required.',
+    'required' => ':attribute は入力必須です',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -156,6 +156,7 @@ return [
         'password_confirmation'=>'パスワード確認',
         'gender'=>'性別',
         'email'=>'メールアドレス',
+        'prefecture'=>'都道府県',
     ],
 
 ];

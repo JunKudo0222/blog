@@ -13,11 +13,13 @@
     }
     
 </style>
+@auth
 <div class="topbar">
 <div class="col-md-2 topright">
            <a href="{{ route('posts.create') }}" class="btn btn-primary">新規スレッド作成</a>
 </div>
 </div>
+@endauth
 @section('content')
 <div class="container">
     

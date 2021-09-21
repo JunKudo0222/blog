@@ -21,8 +21,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        $posts->load('user');
+        $posts = Post::orderBy('created_at','desc')->get();
+        // dd($posts);
+        // $posts->load('user');
+        
+        
         return view('posts.index', compact('posts'));
         //return view('posts.index');
         
@@ -46,6 +49,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $request->session()->regenerateToken();
         $input = $request->only('title','body');
         $request->session()->put("form_input", $input);
         //セッションから値を取り出す
@@ -147,6 +151,7 @@ class PostController extends Controller
         $post -> title    = $request -> title; //ユーザー入力のtitleを代入
         $post -> body     = $request -> body; //ユーザー入力のbodyを代入
         $post -> user_id  = Auth::id(); //ログイン中のユーザーidを代入
+        
 
         return view('posts.confirm',compact('post'));
     }

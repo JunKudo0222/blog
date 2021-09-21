@@ -7,6 +7,7 @@
         float:left;
         width:1000px;
     }
+
     
 </style>
 
@@ -86,14 +87,17 @@
                             <select class="form-control" id="exampleFormControlSelect1" name="prefecture" class="is-invalid">
                                 
                                 
-                                @if(old('prefecture->name')==!null)
+                                @if(old('prefecture')==!null&&1<=old('prefecture')&&old('prefecture')<=47)
+                                
                                 <option value="{{old('prefecture')}}" selected>{{$prefectures->find(old('prefecture'))->name}}</option>
+                                
                                 @else
                                 <option value="" selected>選択してください</option>
                                 @endif
                              @foreach($prefectures as $prefecture)
                             <option value="{{ $prefecture -> id }}" class="@error('prefecture') is-invalid @enderror">{{ $prefecture -> name }}</option>
                             @endforeach
+                            
                             
                             
                             </select>
@@ -156,7 +160,6 @@
                                 
                             </div>
                         </div>
-
                         
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('メールアドレス') }}</label>
@@ -172,14 +175,16 @@
                             </div>
                         </div>
                         
+                        
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('確認画面へ') }}
                                 </button>
                             </div>
                         </div>
                     </form>
+                    <a href="/" class="btn btn-primary loginbutton">{{ __('トップへ戻る') }}</a>
                 </div>
             </div>
         </div>

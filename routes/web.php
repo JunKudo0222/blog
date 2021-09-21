@@ -46,6 +46,9 @@ Route::get('php/thread.php/search', 'PostController@search')->name('posts.search
 Route::group(['middleware' => 'auth'], function() {
     Route::get('php/thread_regist.php', 'PostController@create')->name('posts.create');
     Route::post('php/thread_regist.php/confirm', 'PostController@confirm')->name('posts.confirm');
+	Route::post('posts/{comment}/favorites', 'BookmarkController@store')->name('favorites');
+    Route::post('posts/{comment}/unfavorites', 'BookmarkController@destroy')->name('unfavorites');
+
 });
 // 一覧
 Route::get('php/thread.php', 'PostController@index')->name('posts.index');
@@ -65,8 +68,6 @@ Route::resource('comments', 'CommentController');
 
 
 
-Route::post('posts/{comment}/favorites', 'BookmarkController@store')->name('favorites');
-Route::post('posts/{comment}/unfavorites', 'BookmarkController@destroy')->name('unfavorites');
 
 
 Route::resource('users','UsersController',['only'=>['destroy']]);
