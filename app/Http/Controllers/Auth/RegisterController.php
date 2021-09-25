@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
@@ -74,7 +75,7 @@ class RegisterController extends Controller
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'email' => 'required|string|email|max:200|unique:users,email,NULL,id,deleted_at,NULL',
         ]);
-        return view('posts.confirm');
+        // return view('posts.confirm');
     }
 
     
@@ -115,6 +116,7 @@ class RegisterController extends Controller
 
         //セッションに書き込む
         $request->session()->put("form_input", $input);
+        
 
         return redirect()->action($this->form_confirm);
     }

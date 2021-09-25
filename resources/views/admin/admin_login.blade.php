@@ -19,7 +19,7 @@
 			<form method="post" action="{{ route('admin.login') }}">
 			@csrf 
 			<div>
-				ID: <input class="form-control" type="text" name="user_id" value="" />
+				ID: <input class="form-control" type="text" name="user_id" value="{{ old('user_id') }}" />
 			</div>
 			<div>
 				PASS: <input class="form-control" type="password" name="password" value="" />

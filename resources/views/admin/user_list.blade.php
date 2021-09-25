@@ -132,7 +132,7 @@
         </body>
         @extends('layouts.app')
         <div class="mt-3">
-            {{ $user_list->appends(request()->input())->links() }}
+            {{ $user_list->appends(request()->input())->links('vendor/pagination/pagination_view3') }}
         </div>
 
         

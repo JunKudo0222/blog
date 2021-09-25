@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+	private $formItems = ["user_id","password"];
+
     function showLoginForm(){
         
 		return view('admin.admin_login');
@@ -22,10 +24,11 @@ class AdminController extends Controller
             
 			return redirect()->route('admin.top');
 		}
+		$input = $request->only($this->formItems);
 		//ログイン失敗
 		return redirect()->route('admin.login')->withErrors([
 			"login" => "ユーザーIDまたはパスワードが違います"
-		]);
+		])->withInput($input);
 		
 	}
 }

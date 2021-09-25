@@ -89,8 +89,9 @@ Route::group(['middleware' => ['auth.admin']], function () {
 	Route::get('php/admin/member_detail.php/{id}', 'admin\ManageUserController@showUserDetail')->name('users.detail');
 	//ユーザー編集
 	Route::get('php/admin/member_edit.php/{id}', 'admin\ManageUserController@edit')->name('users.edit');
+	Route::post('php/admin/member_edit.php', 'admin\ManageUserController@post')->name('users.post');
 	//ユーザー編集確認
-	Route::post('php/admin/member_edit.php', 'admin\ManageUserController@editconfirm')->name('users.editconfirm');
+	Route::get('php/admin/member_edit.php/confirm', 'admin\ManageUserController@editconfirm')->name('users.editconfirm');
 	//ユーザー編集完了
 	Route::put('php/admin/member_edit.php/{id}', 'admin\ManageUserController@update')->name('users.update');
 
