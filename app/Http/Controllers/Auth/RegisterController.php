@@ -117,7 +117,6 @@ class RegisterController extends Controller
         //セッションに書き込む
         $request->session()->put("form_input", $input);
         
-
         return redirect()->action($this->form_confirm);
     }
 

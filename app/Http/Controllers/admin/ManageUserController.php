@@ -201,7 +201,10 @@ class ManageUserController extends Controller
         $user->name_sei=$input['name_sei'];
         $user->name_mei=$input['name_mei'];
         $user->email=$input['email'];
-        $user->password=Hash::make($input['password']);
+        if($input['password']==!null){
+
+            $user->password=Hash::make($input['password']);
+        }
         $user->gender_id=$input['gender_id'];
         $user->prefecture_id=$input['prefecture'];
         $user->address=$input['address'];
