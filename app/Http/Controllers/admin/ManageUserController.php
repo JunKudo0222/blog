@@ -192,7 +192,7 @@ class ManageUserController extends Controller
 
     public function update(Request $request)
     {
-        
+        $request->session()->regenerateToken();
         //セッションから値を取り出す
         $input = $request->session()->get("form_input");
         
@@ -248,6 +248,7 @@ class ManageUserController extends Controller
 
     public function register(Request $request)
     {
+        $request->session()->regenerateToken();
         //セッションから値を取り出す
         $input = $request->session()->get("form_input");
         
