@@ -1,11 +1,17 @@
 @extends('layouts.app')
 @section('content')
-<form method="POST" action="{{ route('users.update',['id'=>$input['id']]) }}" enctype="multipart/form-data">
-                        @csrf
-                        {{method_field('PUT')}}
+@if(isset($input['id']))
+    <form method="POST" action="{{ route('users.update',['id'=>$input['id']]) }}" enctype="multipart/form-data">
+@else
+    <form method="POST" action="{{ route('users.register') }}">
+@endif
 
-ID：         <input value="{{$input['id']}}"><br>
-氏名：        <input value="{{$input['name_sei']}}"> <input value="{{$input['name_mei']}}"><br>
+                        @csrf
+                        @isset($input['id'])
+                        {{method_field('PUT')}}
+ID：         {{$input['id']}}<br>
+@endisset
+氏名：        {{$input['name_sei']}} {{$input['name_mei']}}<br>
 @if(
 
     $input['gender_id']==1
@@ -24,7 +30,11 @@ ID：         <input value="{{$input['id']}}"><br>
 <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    確認画面へ
+                                    @if(isset($input['id']))
+                                    編集完了
+                                    @else
+                                    登録完了
+                                    @endif
                                 </button>
                             </div>
                         </div>

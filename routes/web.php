@@ -94,7 +94,10 @@ Route::group(['middleware' => ['auth.admin']], function () {
 	Route::get('php/admin/member_edit.php/confirm', 'admin\ManageUserController@editconfirm')->name('users.editconfirm');
 	//ユーザー編集完了
 	Route::put('php/admin/member_edit.php/{id}', 'admin\ManageUserController@update')->name('users.update');
-
+    //ユーザー登録
+	Route::get('php/admin/member_regist.php', 'admin\ManageUserController@showRegistrationForm')->name('users.register_show');
+	//ユーザー登録完了
+	Route::post('php/admin/member_regist.php', 'admin\ManageUserController@register')->name('users.register');
 });
 
 //管理側ログイン

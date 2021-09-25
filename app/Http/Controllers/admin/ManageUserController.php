@@ -107,7 +107,7 @@ class ManageUserController extends Controller
         // //セッションに書き込む
         $request->session()->put("form_input", $input);
         $prefecture=Prefecture::find($input['prefecture']);
-        $id=$input['id'];
+        // $id=$input['id'];
 
         return view('admin.user_edit_confirm', ["input" => $input],compact('prefecture'));
         
@@ -118,7 +118,7 @@ class ManageUserController extends Controller
 
     protected function validator(array $data)
     {
-        
+        if(isset($data['id'])){
         $user=User::find($data['id']);
         if($user->email==$data['email']){
             
@@ -147,6 +147,19 @@ class ManageUserController extends Controller
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'email' => 'required|string|email|max:200|unique:users,email,NULL,id,deleted_at,NULL',
         ]);
+        }}
+        else{
+            return Validator::make($data, [
+                'name_sei' => ['required', 'string', 'max:20'],
+                'name_mei' => ['required', 'string', 'max:20'],
+                'gender_id' => ['required',new Gender],
+                'prefecture' => ['required','between:1,47','integer' ],
+                'address' => ['nullable','string','max:100' ],
+                'password' => ['nullable','string', 'min:8','max:20',new Hankaku, 'confirmed'],
+                // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'email' => 'required|string|email|max:200|unique:users,email,NULL,id,deleted_at,NULL',
+            ]);
+
         }
         
         // return view('posts.confirm');
@@ -222,6 +235,41 @@ class ManageUserController extends Controller
     {
         // return $this->showUserList();
         return redirect()->route('users.userlist');
+    }
+
+    public function showRegistrationForm()
+    {
+        $prefectures = Prefecture::all();
+        return view('admin.user_regist',compact('prefectures'));
+    }
+
+    public function register(Request $request)
+    {
+        //セッションから値を取り出す
+        $input = $request->session()->get("form_input");
+        
+        
+        // $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($input)));
+
+        //セッションを空にする
+        $request->session()->forget("form_input");
+        return redirect()->route('users.userlist');
+           
+    }
+    protected function create(array $data)
+    {
+        
+        
+        return User::create([
+            'name_sei' => $data['name_sei'],
+            'name_mei' => $data['name_mei'],
+            'gender_id' => $data['gender_id'],
+            'prefecture_id' => $data['prefecture'],
+            'address' => $data['address'],
+            'password' => Hash::make($data['password']),
+            'email' => $data['email'],
+        ]);
     }
 
 
