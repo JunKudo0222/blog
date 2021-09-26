@@ -155,7 +155,7 @@ class ManageUserController extends Controller
                 'gender_id' => ['required',new Gender],
                 'prefecture' => ['required','between:1,47','integer' ],
                 'address' => ['nullable','string','max:100' ],
-                'password' => ['nullable','string', 'min:8','max:20',new Hankaku, 'confirmed'],
+                'password' => ['required','string', 'min:8','max:20',new Hankaku, 'confirmed'],
                 // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'email' => 'required|string|email|max:200|unique:users,email,NULL,id,deleted_at,NULL',
             ]);
