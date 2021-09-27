@@ -157,6 +157,7 @@ return [
         'gender'=>'性別',
         'email'=>'メールアドレス',
         'prefecture'=>'都道府県',
+        'gender_id'=>'性別',
     ],
 
 ];
