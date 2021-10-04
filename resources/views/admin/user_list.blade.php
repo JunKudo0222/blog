@@ -53,7 +53,7 @@
 
 <div class="topbar">
 <h1 class="topbar-content">会員一覧</h1>
-<a href="{{ route('users.userlist') }}" class="btn btn-primary topbar-content2">トップへ戻る</a>
+<a href="{{ route('admin.top') }}" class="btn btn-primary topbar-content2">トップへ戻る</a>
 </div>
 <a href="{{ route('users.register_show') }}" class="btn btn-primary regist">会員登録</a>
 
@@ -66,8 +66,8 @@
                     </tr>
                     <tr>
                     <th bgcolor="lightblue">性別</th>
-                    <th><input type="radio" name="gender_id" value=1> 男性
-                    <input type="radio" name="gender_id" value=2> 女性</th>
+                    <th><input type="checkbox" name="gender_id1" value=1> 男性
+                    <input type="checkbox" name="gender_id2" value=1> 女性</th>
                     </tr>
                     <tr>
                     <th bgcolor="lightblue">都道府県</th>
@@ -102,11 +102,17 @@
 				<table border="1" class="sorttbl" id="sampleTable">
                 <thead bgcolor="pink">
                     <tr>
-                    <th cmanSortBtn>ID<i class="fa fa-sort"></i></th>
+                    <th>ID @if(isset($sort))<a href="{{ route('users.userlist') }}">▼</a> 
+                        @else<a href="{{ route('users.userlist',['sort'=>'asc']) }}">▲</a>
+                    
+                    @endif</th>
                     <th>氏名</th>
                     <th>性別</th>
                     <th>住所</th>
-                    <th cmanSortBtn>登録日時<i class="fa fa-sort"></i></th>
+                    <th>登録日時 @if(isset($sort))<a href="{{ route('users.userlist') }}">▼</a> 
+                        @else<a href="{{ route('users.userlist',['sort'=>'asc']) }}">▲</a>
+                    
+                    @endif</th>
                     <th>編集</th>
                     <th>詳細</th>
                     

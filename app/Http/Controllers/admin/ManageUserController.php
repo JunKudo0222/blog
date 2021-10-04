@@ -27,13 +27,27 @@ class ManageUserController extends Controller
 
 
 
-    function showUserList(){
-		$user_list = User::orderBy("id")->paginate(10)->onEachSide(1);
-        // dd($user_list);
-        $prefectures = Prefecture::all();
-		return view("admin.user_list", [
-			"user_list" => $user_list
-		],compact('prefectures'));
+    function showUserList(Request $request){
+        if(isset($request->sort)){
+
+            $user_list = User::orderBy('id','asc')->paginate(10)->onEachSide(1);
+            // dd($user_list);
+            $prefectures = Prefecture::all();
+            $sort='asc';
+            return view("admin.user_list", [
+                "user_list" => $user_list
+            ],compact('prefectures','sort'));
+        }
+        else{
+            $user_list = User::orderBy('id','desc')->paginate(10)->onEachSide(1);
+            // dd($user_list);
+            $prefectures = Prefecture::all();
+            
+            return view("admin.user_list", [
+                "user_list" => $user_list
+            ],compact('prefectures'));
+
+        }
 	}
 	function showUserDetail($id){
 		$user = User::find($id);
@@ -41,6 +55,7 @@ class ManageUserController extends Controller
 		return view("admin.user_detail",compact('user','prefectures'));
 	}
     function search(Request $request){
+        
         $query = User::query();
         // dd($request->gender_id);
         if(isset($request->id)){
@@ -48,9 +63,14 @@ class ManageUserController extends Controller
 
         }
         
-        if(isset($request->gender_id)){
+        if(isset($request->gender_id1)&&$request->gender_id2==null){
             
-            $query->where('users.gender_id', $request->gender_id);
+            $query->where('users.gender_id', 1);
+            
+        }
+        if(isset($request->gender_id2)&&$request->gender_id1==null){
+            
+            $query->where('users.gender_id', 2);
             
         }
         if(isset($request->prefecture)){
