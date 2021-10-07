@@ -120,7 +120,7 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('それ以降の住所') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control" name="address" value="{{old('address')}}" required autocomplete="address">
+                                <input id="address" type="text" class="form-control" name="address" value="{{old('address')}}"  autocomplete="address">
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

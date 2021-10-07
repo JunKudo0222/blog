@@ -132,9 +132,9 @@
 
                             <div class="col-md-6">
                                 @if(old('address')==!null)
-                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}" required autocomplete="address">
+                                <input id="address" type="text" class="form-control" name="address" value="{{ old('address') }}"  autocomplete="address">
                                 @else
-                                <input id="address" type="text" class="form-control" name="address" value="{{ $user->address }}" required autocomplete="address">
+                                <input id="address" type="text" class="form-control" name="address" value="{{ $user->address }}"  autocomplete="address">
                                 @endif
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
