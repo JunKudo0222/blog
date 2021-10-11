@@ -187,7 +187,7 @@ class ManageUserController extends Controller
     
 
 
-
+//編集・登録両方で使っていない？↓
     public function editconfirm(Request $request)
     {
         dd($request);
@@ -263,7 +263,7 @@ class ManageUserController extends Controller
     public function showRegistrationForm()
     {
         $prefectures = Prefecture::all();
-        return view('admin.user_regist',compact('prefectures'));
+        return view('admin.user_edit',compact('prefectures'));
     }
 
     public function register(Request $request)
